@@ -1,15 +1,18 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { login } from "../../actions/auth";
+import { startLoginEmailPassword, startGoogleLogin } from "../../actions/auth";
 import { useForm } from "../../hooks/useForm";
 
 export const LoginScreen = () => {
   const dispatch = useDispatch();
+  const state = useSelector((state) => state.ui);
+
+  const { loading } = state;
 
   const { values, handleInputChange } = useForm({
-    email: "lozanich598@gmail.com",
-    password: "1234",
+    email: "loz@gmail.com",
+    password: "123456",
   });
 
   const { email, password } = values;
@@ -17,7 +20,13 @@ export const LoginScreen = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     console.log(email, password);
-    dispatch(login(661634, "lozanich"));
+    dispatch(startLoginEmailPassword(email, password));
+  };
+
+  const handleLoginGoogle = () => {
+    console.log("login GOOGLE");
+
+    dispatch(startGoogleLogin());
   };
 
   return (
@@ -42,13 +51,17 @@ export const LoginScreen = () => {
           value={password}
           onChange={handleInputChange}
         />
-        <button className="btn btn-primary btn-block" type="submit">
+        <button
+          className="btn btn-primary btn-block"
+          type="submit"
+          disabled={loading}
+        >
           Ingresar
         </button>
         <hr />
         <div className="auth__social-networks">
           <p>Login with social networks</p>
-          <div className="google-btn">
+          <div className="google-btn" onClick={handleLoginGoogle}>
             <div className="google-icon-wrapper">
               <img
                 className="google-icon"
