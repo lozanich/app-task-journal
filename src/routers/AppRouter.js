@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Switch, Redirect } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Redirect,
+  Route,
+} from "react-router-dom";
 import { AuthRouter } from "./AuthRouter";
 import { firebase } from "../firebase/firebaseConfig";
 import { useDispatch } from "react-redux";
@@ -7,6 +12,9 @@ import { login } from "../actions/auth";
 import { PrivateRouter } from "./PrivateRouter";
 import { PublicRouter } from "./PublicRouter";
 import { JournalRoutes } from "./JournalRoutes";
+import { AboutScreen } from "../components/AboutScreen";
+import { loadNotes } from "../helpers/loadNotes";
+import { setNotesLoaded } from "../actions/notes";
 
 export const AppRouter = () => {
   const dispatch = useDispatch();
@@ -19,6 +27,8 @@ export const AppRouter = () => {
       if (user?.uid) {
         const { uid, displayName } = user;
         dispatch(login(uid, displayName));
+        const notes = loadNotes(uid);
+        dispatch(setNotesLoaded(notes));
         setIsLoggedIn(true);
       } else {
         setIsLoggedIn(false);
@@ -29,7 +39,7 @@ export const AppRouter = () => {
   }, [dispatch, setChecking, setIsLoggedIn]);
 
   if (checking) {
-    return <h1>Cargando...</h1>;
+    return <h1>Please wait...</h1>;
   }
 
   return (
@@ -43,6 +53,9 @@ export const AppRouter = () => {
             component={AuthRouter}
             path="/auth"
           />
+
+          {/* Ruta publica de prueba en caso de requerir cuando no esta logueado y no requiere prefijo auth */}
+          <Route exact path="/about" component={AboutScreen} />
 
           <PrivateRouter
             isAuth={isLoggedIn}

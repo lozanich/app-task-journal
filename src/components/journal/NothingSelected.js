@@ -5,7 +5,7 @@ export const NothingSelected = () => {
     <div className="nothing__main_content">
       <p>
         Select something
-        {/* <hr /> */}
+        <br />
         <i className="far fa-star fa-4x mt-5"></i>
       </p>
     </div>
