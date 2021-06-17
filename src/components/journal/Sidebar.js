@@ -9,13 +9,10 @@ export const Sidebar = () => {
   const { name } = useSelector((state) => state.auth);
 
   const handleLogout = () => {
-    console.log("Saliendo de la aplicacion");
     dispatch(startLogout());
   };
 
   const handleAddNewNote = () => {
-    console.log("abrir agregar nueva note");
-
     dispatch(startNewNote());
   };
 

@@ -18,6 +18,8 @@ export const startNewNote = () => {
 
     const docRef = await db.collection(`${uid}/journal/notes`).add(newNote);
     dispatch(setActiveNote(docRef.id, newNote));
+    newNote.id = docRef.id;
+    dispatch(addNote(newNote));
   };
 };
 
@@ -26,6 +28,13 @@ export const setActiveNote = (id, note) => ({
   payload: {
     id,
     ...note,
+  },
+});
+
+export const addNote = (note) => ({
+  type: types.notesAddNew,
+  payload: {
+    note,
   },
 });
 
@@ -91,3 +100,31 @@ export const startUploading = (file) => {
     Swal.close();
   };
 };
+
+export const startDelete = (id) => {
+  return async (dispatch, getState) => {
+    const { uid } = getState().auth;
+    const url = `${uid}/journal/notes/${id}`;
+
+    try {
+      db.doc(url).delete();
+      dispatch(deleteNote(id));
+      Swal.fire({
+        title: "Eliminada",
+        text: "Nota eliminada correctamente",
+        icon: "success",
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const deleteNote = (id) => ({
+  type: types.notesDelete,
+  payload: { id },
+});
+
+export const notesLogoutClean = () => ({
+  type: types.notesLogoutCleanning,
+});

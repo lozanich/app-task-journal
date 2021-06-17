@@ -30,6 +30,13 @@ export const notesreducer = (state = initialState, action) => {
         },
       };
 
+    case types.notesAddNew:
+      // state.notes.push(action.payload.note);
+      return {
+        ...state,
+        notes: [action.payload.note, ...state.notes],
+      };
+
     case types.notesLoad:
       return {
         ...state,
@@ -42,6 +49,20 @@ export const notesreducer = (state = initialState, action) => {
         notes: state.notes.map((item) =>
           item.id === action.payload.id ? action.payload : item
         ),
+      };
+
+    case types.notesDelete:
+      return {
+        ...state,
+        active: null,
+        notes: state.notes.filter((item) => item.id !== action.payload.id),
+      };
+
+    case types.notesLogoutCleanning:
+      return {
+        ...state,
+        active: null,
+        notes: [],
       };
 
     default:
