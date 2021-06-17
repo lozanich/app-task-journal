@@ -13,7 +13,6 @@ import { PrivateRouter } from "./PrivateRouter";
 import { PublicRouter } from "./PublicRouter";
 import { JournalRoutes } from "./JournalRoutes";
 import { AboutScreen } from "../components/AboutScreen";
-import { loadNotes } from "../helpers/loadNotes";
 import { setNotesLoaded } from "../actions/notes";
 
 export const AppRouter = () => {
@@ -27,8 +26,7 @@ export const AppRouter = () => {
       if (user?.uid) {
         const { uid, displayName } = user;
         dispatch(login(uid, displayName));
-        const notes = loadNotes(uid);
-        dispatch(setNotesLoaded(notes));
+        dispatch(setNotesLoaded(uid));
         setIsLoggedIn(true);
       } else {
         setIsLoggedIn(false);
