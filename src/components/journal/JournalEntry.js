@@ -6,14 +6,17 @@ import { setActiveNote } from "../../actions/notes";
 export const JournalEntry = ({ id, title, body, date, url }) => {
   const dateLocal = moment(date);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const handleNote = () => {
-    dispatch(setActiveNote(id, {title, body, date, url}))
+    dispatch(setActiveNote(id, { title, body, date, url }));
   };
 
   return (
-    <div onClick={handleNote} className="journal__entry">
+    <div
+      onClick={handleNote}
+      className="journal__entry animate__animated animate__fadeIn animate__faster"
+    >
       {url && (
         <div
           className="journal__entry-picture"
