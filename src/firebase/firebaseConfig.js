@@ -11,6 +11,8 @@ const firebaseConfig = {
   appId: process.env.REACT_APP_FIREBASE_APPID,
 };
 
+// console.log(firebaseConfig);
+
 // const firebaseConfigTest = {
 //   apiKey: "AIzaSyDo7YJAwrTUmSqDvJDAvwNB4SYRSFwG71o",
 //   authDomain: "react-testing-a2fdf.firebaseapp.com",

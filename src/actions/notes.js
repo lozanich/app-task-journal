@@ -16,10 +16,14 @@ export const startNewNote = () => {
       date: new Date().getTime(),
     };
 
-    const docRef = await db.collection(`${uid}/journal/notes`).add(newNote);
-    dispatch(setActiveNote(docRef.id, newNote));
-    newNote.id = docRef.id;
-    dispatch(addNote(newNote));
+    try {
+      const docRef = await db.collection(`${uid}/journal/notes`).add(newNote);
+      dispatch(setActiveNote(docRef.id, newNote));
+      newNote.id = docRef.id;
+      dispatch(addNote(newNote));
+    } catch (error) {
+      console.log(error)
+    }
   };
 };
 
@@ -61,7 +65,8 @@ export const startSaveNote = (note) => {
     const noteToFirestore = { ...note };
     delete noteToFirestore.id;
     try {
-      await db.doc(`${uid}/journal/notes/${note.id}`).update(noteToFirestore);
+      const path = `${uid}/journal/notes/${note.id}`
+      await db.doc(path).update(noteToFirestore);
       Swal.fire("Saved", note.title, "success");
       dispatch(refreshNote(note.id, note));
     } catch (error) {
@@ -88,13 +93,12 @@ export const startUploading = (file) => {
       title: "Uploading...",
       text: "Please wait...",
       allowOutsideClick: false,
-      onBeforeOpen: () => {
-        Swal.showLoading();
-      },
     });
 
     const url = await fileUpload(file);
+    // console.log(url);
     aciveNote.url = url;
+    // console.log(aciveNote);
     dispatch(startSaveNote(aciveNote));
 
     Swal.close();

@@ -10,11 +10,11 @@ export const startLoginEmailPassword = (email, password) => {
     //   dispatch(login(987456, "Lozano"));
     // }, 3500);
     dispatch(startLoadingAction());
-    firebase
+    return firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(({ user }) => {
-        console.log(user);
+        // console.log(user);
 
         const { uid, displayName } = user;
         dispatch(login(uid, displayName));

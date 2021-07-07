@@ -9,6 +9,7 @@ export const JournalEntry = ({ id, title, body, date, url }) => {
   const dispatch = useDispatch();
 
   const handleNote = () => {
+    console.log("handle note==>>>>");
     dispatch(setActiveNote(id, { title, body, date, url }));
   };
 

@@ -9,6 +9,7 @@ export const Sidebar = () => {
   const { name } = useSelector((state) => state.auth);
 
   const handleLogout = () => {
+    console.log("logouttt=>=>>=>=>>=");
     dispatch(startLogout());
   };
 

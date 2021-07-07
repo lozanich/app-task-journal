@@ -24,10 +24,9 @@ export const RegisterScreen = () => {
   const handleRegister = (e) => {
     e.preventDefault();
     if (formValid()) {
-      console.log("el formularios es valido");
       dispatch(startRegisterWithEmailPasswordName(email, password, name));
     }
-    console.log(name, email, password, password2);
+    // console.log(name, email, password, password2);
   };
 
   const formValid = () => {

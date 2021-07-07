@@ -19,13 +19,11 @@ export const LoginScreen = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    console.log(email, password);
+    // console.log('ARGUMENTSS===>>><<<',email, password);
     dispatch(startLoginEmailPassword(email, password));
   };
 
   const handleLoginGoogle = () => {
-    console.log("login GOOGLE");
-
     dispatch(startGoogleLogin());
   };
 

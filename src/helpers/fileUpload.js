@@ -10,6 +10,8 @@ export const fileUpload = async (file) => {
       body: formData,
     });
 
+    // console.log("RESPONSEEEE2", resp);
+
     if (resp.ok) {
       const cloudJson = await resp.json();
       return cloudJson.secure_url;
